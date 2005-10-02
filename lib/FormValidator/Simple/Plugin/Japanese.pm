@@ -6,7 +6,7 @@ use Unicode::RecursiveDowngrade;
 use Mail::Address::MobileJp;
 use Jcode;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 # plugin specific method
 sub __japanese_check_charset {
@@ -148,7 +148,7 @@ FormValidator::Simple::Plugin::Japanese - Japanese specific validation.
 This modules adds some Japanese specific validation commands to L<FormValidator::Simple>.
 Most of validation code is borrowed from Sledge::Plugin::Validator::japanese.
 
-( Sledge is a MVC web application framework: http://sl.edge/jp [Japanese] )
+( Sledge is a MVC web application framework: http://sl.edge.jp/ [Japanese] )
 
 =head1 VALIDATION COMMANDS
 
@@ -209,7 +209,7 @@ L<Jcode>
 
 L<Unicode::RecursiveDowngrade>
 
-http://sl.edge/jp/ (Japanese)
+http://sl.edge.jp/ (Japanese)
 
 http://sourceforge.jp/projects/sledge
 

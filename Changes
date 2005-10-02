@@ -1,9 +1,12 @@
 Revision history for Perl extension FormValidator::Simple::Plugin::Japanese.
 
+0.03  Sun Oct  1 03:00:00 2005
+    - little bit fixed documentation
+
 0.02  Mon Sep 26 23:00:00 2005
-	- CPAN release version
+    - CPAN release version
 
 0.01  Wed Jul  6 15:54:29 2005
-	- original version; created by h2xs 1.23 with options
-		-A -X FormValidator::Simple::Plugin::Japanese
+    - original version; created by h2xs 1.23 with options
+        -A -X FormValidator::Simple::Plugin::Japanese
 
