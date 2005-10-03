@@ -7,5 +7,6 @@ WriteMakefile(
         Jcode => 0,
         Unicode::RecursiveDowngrade => '0.02',
         Mail::Address::MobileJp => 0.04,
+        FormValidator::Simple::Plugin::Number::Phone::JP => '0.01',
     }, # e.g., Module::Name => 1.1
 );

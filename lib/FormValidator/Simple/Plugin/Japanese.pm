@@ -1,12 +1,15 @@
 package FormValidator::Simple::Plugin::Japanese;
 use strict;
+use base qw/
+    FormValidator::Simple::Plugin::Number::Phone::JP
+/;
 use FormValidator::Simple::Exception;
 use FormValidator::Simple::Constants;
 use Unicode::RecursiveDowngrade;
 use Mail::Address::MobileJp;
 use Jcode;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 # plugin specific method
 sub __japanese_check_charset {
@@ -73,7 +76,7 @@ sub JLENGTH {
     return ($min <= $length and $length <= $max) ? TRUE : FALSE;
 }
 
-sub JZIP {
+sub ZIP_JP {
     my ($self, $params, $args) = @_;
     if ( scalar(@$params) == 1 ) {
         return $params->[0] =~ /^\d{3}\-{0,1}\d{4}$/ ? TRUE : FALSE;
@@ -83,12 +86,12 @@ sub JZIP {
     }
     else {
         FormValidator::Simple::Exception->throw(
-            qq/wrong format for 'JZIP'./
+            qq/wrong format for 'ZIP_JP'./
         );
     }
 }
 
-sub EMAIL_JMOBILE {
+sub EMAIL_MOBILE_JP {
     my ($self, $params, $args) = @_;
     if ( @$args == 0 ) {
         return Mail::Address::MobileJp::is_mobile_jp( $params->[0] )
@@ -137,10 +140,10 @@ FormValidator::Simple::Plugin::Japanese - Japanese specific validation.
     use FormValidator::Simple qw/Japanese/;
 
     my $result = FormValidator::Simple->check( $req => [
-        zip       => [ 'NOT_BLANK', 'JZIP' ],
+        zip       => [ 'NOT_BLANK', 'ZIP_JP' ],
         name      => [ 'NOT_BLANK', [ 'JLENGTH', 5 10 ] ],
         kana_name => [ 'NOT_BLANK', 'KATAKANA', [ 'JLENGTH', 5, 10 ] ],
-        email     => [ [ 'EMAIL_JMOBILE', 'IMODE' ] ],
+        email     => [ [ 'EMAIL_MOBILE_JP', 'IMODE' ] ],
     ] );
 
 =head1 DESCRIPTION
@@ -167,37 +170,45 @@ check if the data is Katakana or not.
 check the length of the data (behaves like 'LENGTH').
 but this counts multibyte character as 1.
 
-=item JZIP
+=item ZIP_JP
 
 check Japanese zip code.
 [ seven digit ( and - ) for example 1111111, 111-1111 ]
 
     my $result = FormValidator::Simple->check( $req => [
-        zip => [ 'JZIP' ],
+        zip => [ 'ZIP_JP' ],
     ] );
 
 or you can validate with two params,
-[ one is three digit, another is four digit ]
+[ one is three digit, another is four. ]
 
     my $result = FormValidator::Simple->check( $req => [
-        { zip => [qw/zip1 zip2/] } => [ 'JZIP' ]
+        { zip => [qw/zip1 zip2/] } => [ 'ZIP_JP' ]
     ] );
 
-=item EMAIL_JMOBILE
+=item EMAIL_MOBILE_JP
 
 check with L<Mail::Address::MobileJp>.
 
     my $result = FormValidator::Simple->check( $req => [
-        email => [ 'EMAIL_JMOBILE' ]
+        email => [ 'EMAIL_MOBILE_JP' ]
     ] );
 
 you can also check if it's 'IMODE', 'EZWEB', or 'VODAFONE'.
 
     my $result = FormValidator::Simple->check( $req => [
-        email => [ ['EMAIL_JMOBILE', 'VODAFONE' ] ]
+        email => [ ['EMAIL_MOBILE_JP', 'VODAFONE' ] ]
     ] );
 
 =back
+
+=head1 LOADING OTHER PLUGINS
+
+This module loads other plugins that has essential japanese specific validation.
+
+See follow listed modules.
+
+L<FormValidator::Simple::Plugin::Number::Phone::JP>,
 
 =head1 SEE ALSO
 
@@ -208,6 +219,8 @@ L<Mail::Address::MobileJp>
 L<Jcode>
 
 L<Unicode::RecursiveDowngrade>
+
+L<FormValidator::Simple::Plugin::Number::Phone::JP>
 
 http://sl.edge.jp/ (Japanese)
 

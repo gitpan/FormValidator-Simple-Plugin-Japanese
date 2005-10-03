@@ -1,6 +1,13 @@
 Revision history for Perl extension FormValidator::Simple::Plugin::Japanese.
 
-0.03  Sun Oct  1 03:00:00 2005
+0.04  Mon Oct  3 19:00:00 2005
+    - fixed some validation's name
+        JZIP          -> ZIP_JP
+        EMAIL_JMOBILE -> EMAIL_MOBILE_JP
+
+    - Now this loads FormValidator::Simple::Plugin::Number::Phone::JP
+
+0.03  Sun Oct  2 03:00:00 2005
     - little bit fixed documentation
 
 0.02  Mon Sep 26 23:00:00 2005
