@@ -1,5 +1,5 @@
 use strict;
-use Test::More tests => 14;
+use Test::More tests => 15;
 
 use FormValidator::Simple qw/Japanese/;
 use CGI;
@@ -55,12 +55,15 @@ my $q2 = CGI->new;
 $q2->param( mail1 => '123456789@docomo.ne.jp'   );
 $q2->param( mail2 => '123456789@ezweb.ne.jp'    );
 $q2->param( mail3 => '123456789@t.vodafone.ne.jp' );
+$q2->param( mail4 => '123456789@softbank.ne.jp' );
 my $r5 = FormValidator::Simple->check( $q2 => [
     mail1 => [ 'EMAIL_MOBILE_JP' ],
     mail2 => [ ['EMAIL_MOBILE_JP', 'IMODE'] ],
     mail3 => [ ['EMAIL_MOBILE_JP', 'EZWEB', 'VODAFONE'] ],
+    mail4 => [ ['EMAIL_MOBILE_JP', 'SOFTBANK'] ],
 ] );
 
 ok(!$r5->invalid('mail1'));
 ok($r5->invalid('mail2'));
 ok(!$r5->invalid('mail3'));
+ok(!$r5->invalid('mail4'));

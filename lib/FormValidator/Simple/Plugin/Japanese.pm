@@ -9,7 +9,7 @@ use Unicode::RecursiveDowngrade;
 use Mail::Address::MobileJp;
 use Jcode;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 # plugin specific method
 sub __japanese_check_charset {
@@ -118,6 +118,12 @@ sub EMAIL_MOBILE_JP {
                     last;
                 }
             }
+            elsif ( lc($career) eq 'softbank' ) {
+                if ( Mail::Address::MobileJp::is_softbank( $params->[0] ) ) {
+                    $ok = 1;
+                    last;
+                }
+            }
             else {
                 FormValidator::Simple::Exception->throw(
                     qq/Unknown type of mail address./
@@ -194,7 +200,7 @@ check with L<Mail::Address::MobileJp>.
         email => [ 'EMAIL_MOBILE_JP' ]
     ] );
 
-you can also check if it's 'IMODE', 'EZWEB', or 'VODAFONE'.
+you can also check if it's 'IMODE', 'EZWEB', 'VODAFONE', or 'SOFTBANK'.
 
     my $result = FormValidator::Simple->check( $req => [
         email => [ ['EMAIL_MOBILE_JP', 'VODAFONE' ] ]
